@@ -1,0 +1,9 @@
+---
+
+- name: Common Packages
+  yum:
+    name:
+      - git
+      - vim
+      - sudo
+    state: latest

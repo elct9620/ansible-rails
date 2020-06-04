@@ -1,0 +1,15 @@
+---
+
+- name: Install Rails Requirements
+  yum:
+    name:
+      - libxml2-devel
+      - ImageMagick
+      - ImageMagick-devel
+
+- name: Install pg gem
+  gem:
+    name: pg
+    executable: "/opt/ruby-{{ ruby_version }}/bin/gem"
+    user_install: no
+  when: postgres is defined and postgres|bool

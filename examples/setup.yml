@@ -1,0 +1,32 @@
+- hosts: all
+  collections:
+    - elct9620.rails
+  vars:
+    install: yes
+    setup: yes
+  roles:
+    - base
+    - deploy_user
+
+- hosts: web
+  collections:
+    - elct9620.rails
+  vars:
+    install: yes
+    setup: yes
+  roles:
+    - logrotate
+    - ruby
+    - nginx
+    - node
+    - postgres
+    - rails
+
+- hosts: db
+  collections:
+    - elct9620.rails
+  vars:
+    install: yes
+    setup: yes
+  roles:
+    - postgres

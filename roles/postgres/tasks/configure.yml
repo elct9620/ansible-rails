@@ -1,0 +1,25 @@
+---
+
+- name: Listen TCP connection
+  lineinfile:
+    dest: "/var/lib/pgsql/{{ postgres_major_version }}/data/postgresql.conf"
+    regexp: "^#?listen_addresses.+$"
+    line: "listen_addresses = '*'"
+    state: "{{ 'present' if postgres_tcp else 'absent' }}"
+  notify: restart postgres
+
+- name: Setup Firewall to allow incoming 5432
+  firewalld:
+    port: 5432/tcp
+    permanent: yes
+    immediate: yes
+    state: "{{ 'enabled' if postgres_tcp else 'disabled' }}"
+  when: firewall is defined
+
+- name: Configure host based authentication (if entries are configured).
+  template:
+    src: "pg_hba.conf.j2"
+    dest: "/var/lib/pgsql/{{ postgres_major_version }}/data/pg_hba.conf"
+    mode: 0600
+  notify: restart postgres
+  when: postgres_hba_entries is defined

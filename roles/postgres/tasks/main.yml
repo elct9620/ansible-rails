@@ -1,0 +1,12 @@
+---
+
+- name: Install PostgreSQL
+  import_tasks: install.yml
+  when: install is defined and install|bool
+
+- name: Setup Database
+  import_tasks: setup.yml
+  when: setup is defined and setup|bool
+
+- name: Configure Database
+  import_tasks: configure.yml

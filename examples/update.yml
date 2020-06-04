@@ -1,0 +1,7 @@
+- hosts: web
+  collections:
+    - elct9620.rails
+  roles:
+    - deploy_user
+    - logrotate
+    - nginx

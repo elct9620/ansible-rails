@@ -1,0 +1,50 @@
+---
+
+- name: Install Dependencies
+  yum:
+    name:
+      - epel-release
+      - centos-release-scl
+    state: latest
+
+- name: Setup PostgreSQL Repo
+  yum:
+    name: "https://download.postgresql.org/pub/repos/yum/{{ postgres_major_version }}/redhat/rhel-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+    state: present
+
+- name: Install PostgreSQL client
+  yum:
+    name:
+      - "postgresql{{ postgres_major_version }}-server"
+      - "postgresql{{ postgres_major_version }}-contrib"
+      - "postgresql{{ postgres_major_version }}-devel"
+      - "postgresql{{ postgres_major_version }}"
+      - python-psycopg2
+    state: latest
+
+- name: Check if PostgreSQL database is initialized.
+  stat:
+    path: "/var/lib/pgsql/{{ postgres_major_version }}/data/PG_VERSION"
+  register: pgdata_dir_version
+
+- name: Ensure PostgreSQL database is initialized.
+  command: "/usr/pgsql-{{ postgres_major_version }}/bin/postgresql-{{ postgres_major_version }}-setup initdb"
+  when: not pgdata_dir_version.stat.exists
+  vars:
+    ansible_ssh_pipelining: true
+
+- name: Enable PostgreSQL Server
+  systemd:
+    name: "postgresql-{{ postgres_major_version }}"
+    state: started
+    enabled: yes
+
+- name: Create /etc/profile.d/postgres.sh
+  lineinfile:
+    dest: /etc/profile.d/postgres.sh
+    owner: root
+    group: root
+    mode: 0644
+    create: yes
+    regexp: "^export PATH=/usr/pgsql-"
+    line: "export PATH=/usr/pgsql-{{ postgres_major_version }}/bin:$PATH"
