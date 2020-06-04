@@ -1,5 +1,7 @@
 # Ansible Rails
 
+![Ansible Lint](https://github.com/elct9620/ansible-rails/workflows/Ansible%20Lint/badge.svg)
+
 The Ansible collection for Ruby on Rails provision.
 
 ## Requirements
