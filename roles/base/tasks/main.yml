@@ -6,4 +6,4 @@
       - git
       - vim
       - sudo
-    state: latest
+    state: present

@@ -6,6 +6,7 @@
       - libxml2-devel
       - ImageMagick
       - ImageMagick-devel
+    state: present
 
 - name: Install pg gem
   gem:

@@ -7,7 +7,7 @@
       - GeoIP-data
       - GeoIP-devel
       - openssl-devel
-    state: latest
+    state: present
 
 - name: Create web root
   file:

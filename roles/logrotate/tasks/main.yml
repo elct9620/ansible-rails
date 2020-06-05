@@ -4,7 +4,7 @@
   yum:
     name:
       - logrotate
-    state: latest
+    state: present
   when: install is defined and install|bool
 
 - name: Configure Logrotate

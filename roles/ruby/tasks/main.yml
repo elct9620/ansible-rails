@@ -11,7 +11,7 @@
       - zlib-devel
       - libcurl-devel
       - ncurses-devel
-    state: latest
+    state: present
 
 - name: Get Ruby source code
   get_url:

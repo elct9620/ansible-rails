@@ -5,7 +5,7 @@
     name:
       - epel-release
       - centos-release-scl
-    state: latest
+    state: present
 
 - name: Setup PostgreSQL Repo
   yum:
@@ -20,7 +20,7 @@
       - "postgresql{{ postgres_major_version }}-devel"
       - "postgresql{{ postgres_major_version }}"
       - python-psycopg2
-    state: latest
+    state: present
 
 - name: Check if PostgreSQL database is initialized.
   stat:
