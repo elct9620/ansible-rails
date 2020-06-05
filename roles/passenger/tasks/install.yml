@@ -45,7 +45,7 @@
     group: root
     mode: 0644
     create: yes
-    line: "D /var/run/passenger-instreg 0755 {{ app_user}} {{ app_group }}"
+    line: "D /var/run/passenger-instreg 0755 {{ app_user }} {{ app_group }}"
 
 - name: Add Passenger Module
   set_fact:
