@@ -2,7 +2,7 @@
 
 logrotate:
   - name: application
-    path: "/app/current/log/*.log"
+    path: "/srv/app/current/log/*.log"
     options:
       - daily
       - size 25M
